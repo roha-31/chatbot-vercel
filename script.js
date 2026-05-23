@@ -1,20 +1,29 @@
 function sendMessage() {
-  let input = document.getElementById("userInput").value;
+  let input = document.getElementById("userInput");
+  let text = input.value;
+  if (text === "") return;
+
   let chatbox = document.getElementById("chatbox");
 
-  chatbox.innerHTML += "<p><b>You:</b> " + input + "</p>";
+  // User message
+  chatbox.innerHTML += `<div class="message user">${text}</div>`;
 
-  let reply = "I am a simple chatbot!";
+  // Simple AI logic
+  let reply = getReply(text.toLowerCase());
 
-  if(input.toLowerCase() === "hello") {
-    reply = "Hi!";
-  }
+  setTimeout(() => {
+    chatbox.innerHTML += `<div class="message bot">${reply}</div>`;
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }, 500);
 
-  if(input.toLowerCase() === "how are you") {
-    reply = "I am fine!";
-  }
+  input.value = "";
+}
 
-  chatbox.innerHTML += "<p><b>Bot:</b> " + reply + "</p>";
-
-  document.getElementById("userInput").value = "";
+function getReply(msg) {
+  if (msg.includes("hello")) return "Hello! How can I help you?";
+  if (msg.includes("how are you")) return "I'm just code, but I'm working perfectly 😊";
+  if (msg.includes("your name")) return "I'm your AI Assistant 🤖";
+  if (msg.includes("help")) return "Ask me anything and I'll try my best!";
+  
+  return "Interesting question! I'm still learning 🤖";
 }
